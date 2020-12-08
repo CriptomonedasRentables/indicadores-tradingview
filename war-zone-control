@@ -1,0 +1,46 @@
+//////////////////////////////////////////////////
+// TradingView Indicador: WAR ZONE CONTROL
+// por CriptomonedasRentables.com
+// @CriptomonedasRentables_com
+
+// Disclaimer: No es una recomendación de inversión.
+//             Sólo para propósitos educativos.
+//////////////////////////////////////////////////
+
+//@version=4
+study( shorttitle="War Zone Control", title="War Zone Control [CriptomonedasRentables.com]", overlay=true )
+
+m1 = input( 50, minval=1, title="Media Rápida" )
+m2 = input( 200, minval=1, title="Media Lenta" )
+src = input( close, title="Source" )
+
+media_1 = ema( src, m1 )
+media_2 = wma( src, m2 )
+
+bullCond = crossover( media_1, media_2 )
+bearCond = crossunder( media_1, media_2 )
+
+plotshape(
+	 bullCond ? media_1 : na,
+	 title="TAG Bullish",
+	 text=" TOROS ",
+	 style=shape.labelup,
+	 location=location.absolute,
+	 color=color.green,
+	 textcolor=color.white,
+	 transp=0
+	 )
+	 
+plotshape(
+	 bearCond ? media_2 : na,
+	 title="TAG Bearish",
+	 text=" OSOS ",
+	 style=shape.labelup,
+	 location=location.absolute,
+	 color=color.red,
+	 textcolor=color.white,
+	 transp=0
+	 )
+	 
+plot( media_1, color=color.green )
+plot( media_2, color=color.red )
